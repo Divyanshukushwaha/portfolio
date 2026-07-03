@@ -45,15 +45,15 @@ const CERTIFICATES: Certificate[] = [
   },
   {
     id: "azure-vision",
-    title: "Build a Computer Vision App with Azure Cognitive Services",
+    title: "Build a Computer Vision App with Azure AI Services",
     issuer: "Microsoft + Coursera",
     date: "January 4, 2026",
     image: "/assets/certificates/microsoft_cognitive_cert.jpg",
     earnedStory: "Earned by designing a computer vision app flow on Azure, configuring API pipelines, routing payload coordinates, and parsing metadata responses.",
     learnedStory: "Learned how to hook cloud-hosted OCR engines, classification models, and object categorizers into functional user-facing interfaces.",
-    skills: ["Azure Cognitive Services", "Computer Vision", "OCR API", "Cloud App Flow"],
+    skills: ["Azure AI Services", "Computer Vision", "OCR API", "Cloud App Flow"],
     linkedinUrl: "https://www.linkedin.com/in/mr-divyanshu-314572242",
-    postCaption: "Completed the Microsoft & Coursera program on building Computer Vision Apps with Azure Cognitive Services! 👁️ Configured real-time OCR pipelines and object tagging structures using Azure cloud-hosted cognitive endpoints. \n\n#Azure #Microsoft #ComputerVision #SoftwareEngineer",
+    postCaption: "Completed the Microsoft & Coursera program on building Computer Vision Apps with Azure AI Services! 👁️ Configured real-time OCR pipelines and object tagging structures using Azure cloud-hosted cognitive endpoints. \n\n#Azure #Microsoft #ComputerVision #SoftwareEngineer",
   },
   {
     id: "deloitte-cyber",
@@ -93,15 +93,30 @@ const CERTIFICATES: Certificate[] = [
   },
 ];
 
+const FILTERS = ["All", "AI", "Microsoft", "Google", "IBM", "Deloitte", "Others"];
+
 export default function Certificates() {
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState("All");
 
   const handleCopyText = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
   };
+
+  // Filter logic matching the requested categories
+  const filteredCerts = CERTIFICATES.filter((cert) => {
+    if (activeFilter === "All") return true;
+    if (activeFilter === "AI") return cert.id === "ibm-genai" || cert.id === "google-genai";
+    if (activeFilter === "Microsoft") return cert.id === "azure-vision";
+    if (activeFilter === "Google") return cert.id === "google-genai" || cert.id === "google-python";
+    if (activeFilter === "IBM") return cert.id === "ibm-genai";
+    if (activeFilter === "Deloitte") return cert.id === "deloitte-cyber";
+    if (activeFilter === "Others") return cert.id === "technoxian";
+    return true;
+  });
 
   return (
     <section
@@ -110,7 +125,7 @@ export default function Certificates() {
     >
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-16">
+        <div className="flex flex-col items-center text-center mb-12">
           <span className="text-[10px] font-semibold tracking-widest uppercase text-primary mb-2">
             Credentials
           </span>
@@ -120,49 +135,73 @@ export default function Certificates() {
           <div className="w-10 h-[2px] bg-primary mt-4" />
         </div>
 
-        {/* Certificates Grid (6 items) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {CERTIFICATES.map((cert) => (
-            <div
-              key={cert.id}
-              onClick={() => setSelectedCert(cert)}
-              className="group relative cursor-none bg-stone-gray/20 border border-white/5 hover:border-primary/20 rounded-2xl overflow-hidden shadow-xl transition-all duration-500"
+        {/* Category Filters */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-16 select-none max-w-2xl mx-auto">
+          {FILTERS.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider border cursor-none transition-all duration-300 ${
+                activeFilter === filter
+                  ? "bg-primary border-primary text-background shadow-lg shadow-primary/10"
+                  : "bg-stone-gray/10 border-white/5 text-muted-gray hover:border-white/10 hover:text-warm-white"
+              }`}
             >
-              {/* Image Frame */}
-              <div className="relative aspect-video w-full overflow-hidden bg-soft-black">
-                <Image
-                  src={cert.image}
-                  alt={cert.title}
-                  fill
-                  className="object-cover group-hover:scale-103 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 400px"
-                />
-                {/* View Overlay */}
-                <div className="absolute inset-0 bg-soft-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-warm-white font-semibold px-4 py-2 bg-primary/80 border border-white/10 rounded-full shadow-lg">
-                    <ExternalLink size={12} />
-                    <span>LinkedIn Story</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Information Card */}
-              <div className="p-6">
-                <span className="text-[9px] uppercase tracking-widest text-primary font-semibold block mb-1">
-                  {cert.issuer}
-                </span>
-                <h3 className="font-display text-base font-bold text-warm-white group-hover:text-primary transition-colors duration-300 line-clamp-1">
-                  {cert.title}
-                </h3>
-                <span className="text-[10px] text-muted-gray block mt-2">
-                  {cert.date}
-                </span>
-              </div>
-            </div>
+              {filter}
+            </button>
           ))}
         </div>
 
-        {/* Lightbox Modal */}
+        {/* Certificates Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto min-h-[300px]">
+          <AnimatePresence mode="popLayout">
+            {filteredCerts.map((cert) => (
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                key={cert.id}
+                onClick={() => setSelectedCert(cert)}
+                className="group relative cursor-none bg-stone-gray/20 border border-white/5 hover:border-primary/20 rounded-2xl overflow-hidden shadow-xl transition-all duration-500"
+              >
+                {/* Image Container */}
+                <div className="relative aspect-video w-full overflow-hidden bg-soft-black">
+                  <Image
+                    src={cert.image}
+                    alt={cert.title}
+                    fill
+                    className="object-cover group-hover:scale-103 transition-transform duration-700"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
+                  {/* View Overlay */}
+                  <div className="absolute inset-0 bg-soft-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-warm-white font-semibold px-4 py-2 bg-primary/80 border border-white/10 rounded-full shadow-lg">
+                      <ExternalLink size={12} />
+                      <span>LinkedIn Story</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Information Row */}
+                <div className="p-6 text-left">
+                  <span className="text-[9px] uppercase tracking-widest text-primary font-semibold block mb-1">
+                    {cert.issuer}
+                  </span>
+                  <h3 className="font-display text-base font-bold text-warm-white group-hover:text-primary transition-colors duration-300 line-clamp-1">
+                    {cert.title}
+                  </h3>
+                  <span className="text-[10px] text-muted-gray block mt-2">
+                    {cert.date}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {/* Modal Lightbox */}
         <AnimatePresence>
           {selectedCert && (
             <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
@@ -239,14 +278,14 @@ export default function Certificates() {
 
                     {/* Verified Skills */}
                     <div className="mb-6 text-left">
-                      <span className="text-[9px] uppercase tracking-widest text-muted-gray block mb-3 font-semibold">
+                      <span className="text-[10px] uppercase tracking-widest text-muted-gray block mb-3 font-semibold">
                         Skills Verified
                       </span>
-                      <div className="flex flex-wrap gap-1.5">
+                      <div className="flex flex-wrap gap-2">
                         {selectedCert.skills.map((s) => (
                           <span
                             key={s}
-                            className="px-2.5 py-1 rounded-full bg-soft-black border border-white/5 text-[9px] uppercase tracking-wider text-muted-gray font-semibold"
+                            className="px-4 py-1.5 rounded-full bg-soft-black border border-white/5 text-[10px] uppercase tracking-wider text-muted-gray font-semibold text-center w-fit max-w-full block break-words"
                           >
                             {s}
                           </span>
@@ -288,7 +327,7 @@ export default function Certificates() {
                       </div>
                     </div>
 
-                    {/* Verification Action - No Live Demo */}
+                    {/* Verification Action */}
                     <div className="flex justify-start">
                       <a
                         href={selectedCert.linkedinUrl}

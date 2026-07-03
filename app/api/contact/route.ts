@@ -79,9 +79,36 @@ export async function POST(request: NextRequest) {
     const sanitizedMessage = message.replace(/<[^>]*>?/gm, "").trim();
 
     // 5. Securely dispatching or storing contact form requests (Mocking mailing relay)
-    // We would use an environment secret like process.env.RESEND_API_KEY here to avoid exposing secrets.
     console.log(`[API Contact Secured Payload] Name: ${name}, Email: ${email}, Subject: ${subject}`);
     console.log(`[Sanitized Message]: ${sanitizedMessage}`);
+
+    // Local file log helper for offline preview (saves messages in your project folder)
+    try {
+      const fs = require("fs");
+      const path = require("path");
+      const messagesFilePath = path.join(process.cwd(), "contact_messages.json");
+      let messagesList = [];
+      
+      if (fs.existsSync(messagesFilePath)) {
+        const fileContent = fs.readFileSync(messagesFilePath, "utf8");
+        messagesList = JSON.parse(fileContent || "[]");
+      }
+      
+      messagesList.push({
+        timestamp: new Date().toISOString(),
+        name,
+        email,
+        subject,
+        message: sanitizedMessage,
+        ip
+      });
+      
+      fs.writeFileSync(messagesFilePath, JSON.stringify(messagesList, null, 2), "utf8");
+      console.log(`[Local Write Success] Message saved to: ${messagesFilePath}`);
+    } catch (fsError) {
+      // Suppress read-only filesystem warnings on Vercel deployments
+      console.log("[Filesystem Warning] Could not write local log file (running in Cloud environment).");
+    }
 
     // Return Success
     return NextResponse.json({ success: true, message: "Contact request processed successfully." }, { status: 200 });

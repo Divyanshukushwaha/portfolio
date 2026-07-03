@@ -1,24 +1,35 @@
-# Premium Creative Developer Portfolio — Divyanshu 
+# Premium Creative Developer Portfolio — Divyanshu Kushwaha
+
 An Awwwards-grade, motion-driven portfolio website showcasing software engineering capabilities, interactive mobile development, AI integrations, and verified achievements.
+
 Designed with inspiration from premium portfolios (Apple × Cuberto × Stripe) and built with modern frontend engineering paradigms.
+
 ---
+
 ## 🚀 Key Features
+
 * **3D Reflective Backgrounds**: Torus, octahedron, and sphere primitive shapes rendered dynamically with `Three.js` (React Three Fiber) that rotate and respond to mouse movements.
 * **SafeAura Interactive Case Study**: A focused showcase for the Flutter-Firebase personal safety app. Features a simulated smartphone device mockup allowing users to switch between the actual app screens (SOS dashboard, Incoming callPapa, and Active call Bhaiya).
 * **Story-Driven Certificates Lightbox**: Houses 6 verified technical certificates. Clicking an item displays the background story (**How I Earned It** and **What I Learned**), verified tags, and a **copy-to-clipboard LinkedIn Share Caption** with relevant tags.
 * **Robust Scroll Animations**: Incorporates smooth-scrolling physics powered by `Lenis` combined with scroll-reveal transitions driven by `GSAP` and `Framer Motion`.
 * **Dynamic Cursor Interaction**: Lagging magnet-cursor dot with snap-to targets showing interactive labels (`"VIEW"`, `"DRAG"`, etc.).
 * **Secured API Endpoint**: Contact form submissions are processed via a serverless rate-limited API route (`/api/contact`) with full RFC 5322 regex checks to prevent spam.
+
 ---
+
 ## 🛠️ Technology Stack
+
 * **Framework**: [Next.js](https://nextjs.org/) (App Router structure)
 * **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict type-checking)
 * **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 * **3D Rendering**: [Three.js](https://threejs.org/) + [@react-three/fiber](https://github.com/pmndrs/react-three-fiber)
 * **Animations**: [GSAP ScrollTrigger](https://gsap.com/scrolltrigger/) & [Framer Motion](https://www.framer.com/motion/)
 * **Smooth Scrolling**: [Lenis Scroll](https://lenis.darkroom.engineering/)
+
 ---
+
 ## 📦 Directory Structure
+
 ```text
 ├── app/
 │   ├── api/contact/route.ts   # Rate-limited serverless contact handler
@@ -41,42 +52,35 @@ Designed with inspiration from premium portfolios (Apple × Cuberto × Stripe) a
 │   └── ThreeBackground.tsx    # R3F canvas primitive background rendering
 └── public/assets/             # Static screenshots, resumes, and certificate assets
 ```
+
 ---
+
 ## 💻 Local Development
+
 ### 1. Installation
 Clone the repository, navigate into the project directory, and install dependencies:
 ```bash
 npm install
 ```
+
 ### 2. Run Dev Server
 Start the Next.js local server on `http://localhost:3000`:
 ```bash
 npm run dev
 ```
+
 ### 3. Production Build
 Verify successful compilation and build optimization payloads:
 ```bash
 npm run build
 ```
+
 ---
+
 ## 🌐 Deployment to Vercel
+
 The backend contact form is rate-limited using client IP addresses. Hosting on **Vercel** is recommended because it handles Serverless API routes out-of-the-box:
+
 1. Push your portfolio codebase to **GitHub**.
 2. Connect your GitHub account on **Vercel**.
-3. Import the repository and click **Deploy** (Vercel automatically detects Next.js build parameters)
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Import the repository and click **Deploy** (Vercel automatically detects Next.js build parameters).

@@ -1,14 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { Cpu, Eye, Globe, Sparkles } from "lucide-react";
-import { motion, useMotionValue } from "framer-motion";
+import { Cpu, Eye, Globe, Sparkles, Smartphone } from "lucide-react";
+import { motion } from "framer-motion";
 
 const MARQUEE_1 = [
-  "Python (Beginner)", "HTML & CSS", "Flutter", "Dart", "Firebase", 
-  "AI Prompt Engineering", "Azure Cognitive Services", "Photography", "Video Editing",
-  "Python (Beginner)", "HTML & CSS", "Flutter", "Dart", "Firebase", 
-  "AI Prompt Engineering", "Azure Cognitive Services", "Photography", "Video Editing"
+  "Python", "HTML & CSS", "Flutter", "Dart", "Firebase", 
+  "Generative AI", "Azure AI Services", "Photography", "Video Editing",
+  "Python", "HTML & CSS", "Flutter", "Dart", "Firebase", 
+  "Generative AI", "Azure AI Services", "Photography", "Video Editing"
 ];
 
 const MARQUEE_2 = [
@@ -18,125 +17,52 @@ const MARQUEE_2 = [
   "HR & Recruitment", "Event Management", "International Networking", "Cybersecurity Basics"
 ];
 
-const CORE_SKILLS = [
+const SKILL_CATEGORIES = [
   {
-    title: "Technical Skills",
-    desc: "Python (Beginner), HTML & CSS, Flutter, Dart, Firebase, AI Prompt Engineering, Azure Cognitive Services.",
-    tags: ["Python", "HTML/CSS", "Flutter", "Dart", "Firebase", "AI Prompts", "Azure"],
-    icon: Cpu,
+    title: "Mobile Development",
+    icon: Smartphone,
+    skills: [
+      { name: "Flutter", level: 90 },
+      { name: "Dart", level: 88 },
+      { name: "Firebase", level: 85 },
+    ],
   },
   {
-    title: "Creative Skills",
-    desc: "Photography, Video Editing, Social Media Content Creation, Small Brand Influencing.",
-    tags: ["Photography", "Video Editing", "Content", "Influencer"],
-    icon: Eye,
+    title: "AI & Cloud",
+    icon: Cpu,
+    skills: [
+      { name: "Generative AI", level: 85 },
+      { name: "Azure AI Services", level: 80 },
+    ],
+  },
+  {
+    title: "Programming",
+    icon: Globe,
+    skills: [
+      { name: "Python", level: 80 },
+      { name: "HTML & CSS", level: 85 },
+    ],
   },
   {
     title: "Soft Skills",
-    desc: "Communication, Teamwork & Collaboration, Leadership, Time Management, Problem Solving.",
-    tags: ["Communication", "Teamwork", "Leadership", "Time Management", "Algorithms"],
-    icon: Globe,
+    icon: Sparkles,
+    skills: [
+      { name: "Teamwork & Collaboration", level: 95 },
+      { name: "Communication", level: 90 },
+      { name: "Leadership", level: 88 },
+      { name: "Problem Solving", level: 88 },
+    ],
   },
   {
-    title: "Professional Interests",
-    desc: "HR & Recruitment, Event Management, International Networking, App Development, Cybersecurity Basics.",
-    tags: ["HR", "Events", "Networking", "App Dev", "Cybersecurity"],
-    icon: Sparkles,
-  }
+    title: "Creative Skills",
+    icon: Eye,
+    skills: [
+      { name: "Social Media Content", level: 90 },
+      { name: "Photography", level: 85 },
+      { name: "Video Editing", level: 80 },
+    ],
+  },
 ];
-
-function TiltCard({ skill }: { skill: typeof CORE_SKILLS[0] }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  // Motion values for 3D rotation
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    
-    // Relative mouse coordinates
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    // Degrees
-    const rotX = ((y / rect.height) - 0.5) * -15;
-    const rotY = ((x / rect.width) - 0.5) * 15;
-
-    rotateX.set(rotX);
-    rotateY.set(rotY);
-
-    setGlowPos({ x, y });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    rotateX.set(0);
-    rotateY.set(0);
-  };
-
-  const Icon = skill.icon;
-
-  return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className="relative p-6 sm:p-8 rounded-3xl bg-card-bg border border-white/5 shadow-2xl flex flex-col justify-between min-h-[280px] transition-all duration-100 overflow-hidden cursor-none"
-    >
-      {/* Glow border spotlight */}
-      {isHovered && (
-        <div
-          className="absolute pointer-events-none rounded-full blur-2xl z-0"
-          style={{
-            width: "140px",
-            height: "140px",
-            background: "radial-gradient(circle, rgba(212, 163, 115, 0.12) 0%, rgba(212, 163, 115, 0) 70%)",
-            left: `${glowPos.x - 70}px`,
-            top: `${glowPos.y - 70}px`,
-          }}
-        />
-      )}
-
-      {/* Card Content with 3D offset */}
-      <div style={{ transform: "translateZ(30px)" }} className="relative z-10">
-        <div className="p-3 rounded-2xl bg-soft-black border border-white/5 text-primary w-fit mb-4">
-          <Icon size={20} />
-        </div>
-        
-        <h4 className="font-display text-base sm:text-lg font-bold text-warm-white mb-2 uppercase tracking-wider">
-          {skill.title}
-        </h4>
-        
-        <p className="text-xs text-muted-foreground leading-relaxed mb-6">
-          {skill.desc}
-        </p>
-      </div>
-
-      {/* Tags wrapper */}
-      <div style={{ transform: "translateZ(10px)" }} className="flex flex-wrap gap-1 relative z-10">
-        {skill.tags.map(t => (
-          <span key={t} className="px-2.5 py-0.5 rounded-full bg-soft-black border border-white/5 text-[9px] uppercase tracking-wider text-muted-gray">
-            {t}
-          </span>
-        ))}
-      </div>
-    </motion.div>
-  );
-}
 
 export default function Skills() {
   return (
@@ -157,14 +83,14 @@ export default function Skills() {
         </div>
       </div>
 
-      {/* Opposite Infinite Marquees */}
+      {/* Infinite Marquees looping skills */}
       <div className="flex flex-col gap-6 w-full select-none overflow-hidden py-4">
         {/* Marquee 1 */}
         <div className="flex gap-4 w-[200%] md:w-[150%] animate-marquee">
           {MARQUEE_1.map((item, idx) => (
             <div
               key={idx}
-              className="px-6 py-3 rounded-full bg-card-bg border border-white/5 text-xs uppercase tracking-widest text-warm-white font-semibold shadow-md whitespace-nowrap min-w-[120px] text-center"
+              className="px-8 py-3 rounded-full bg-card-bg border border-white/5 text-xs uppercase tracking-widest text-warm-white font-semibold shadow-md whitespace-nowrap min-w-[140px] w-fit text-center block"
             >
               {item}
             </div>
@@ -176,7 +102,7 @@ export default function Skills() {
           {MARQUEE_2.map((item, idx) => (
             <div
               key={idx}
-              className="px-6 py-3 rounded-full bg-card-bg border border-white/5 text-xs uppercase tracking-widest text-warm-white font-semibold shadow-md whitespace-nowrap min-w-[120px] text-center"
+              className="px-8 py-3 rounded-full bg-card-bg border border-white/5 text-xs uppercase tracking-widest text-warm-white font-semibold shadow-md whitespace-nowrap min-w-[140px] w-fit text-center block"
             >
               {item}
             </div>
@@ -184,15 +110,57 @@ export default function Skills() {
         </div>
       </div>
 
-      {/* 3D tilt categories */}
-      <div className="max-w-6xl mx-auto px-6 mt-20">
+      {/* Skills Proficiency categories with indicator bars */}
+      <div className="max-w-6xl mx-auto px-6 mt-24">
         <h4 className="font-display text-[10px] uppercase tracking-[0.25em] text-center text-muted-gray mb-12 font-bold">
-          Core Focus Domains
+          Proficiency Levels & categories
         </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {CORE_SKILLS.map((skill, index) => (
-            <TiltCard key={index} skill={skill} />
-          ))}
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {SKILL_CATEGORIES.map((cat, idx) => {
+            const Icon = cat.icon;
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                className="p-8 rounded-3xl bg-card-bg border border-white/5 hover:border-primary/20 shadow-2xl flex flex-col justify-start min-h-[250px] transition-all duration-300 relative group"
+              >
+                {/* visual border accent */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary/30 to-transparent rounded-t-3xl" />
+                
+                <div className="flex items-center gap-3 mb-6 border-b border-white/5 pb-4 text-left">
+                  <div className="p-2.5 rounded-xl bg-soft-black text-primary border border-white/5 group-hover:bg-primary/10 transition-colors">
+                    <Icon size={18} />
+                  </div>
+                  <h4 className="font-display text-sm font-bold text-warm-white uppercase tracking-wider">
+                    {cat.title}
+                  </h4>
+                </div>
+
+                {/* Skill Bars List */}
+                <div className="flex flex-col gap-4 text-left">
+                  {cat.skills.map((skill, sIdx) => (
+                    <div key={sIdx} className="flex flex-col gap-1.5">
+                      <div className="flex justify-between text-xs font-semibold text-muted-foreground">
+                        <span>{skill.name}</span>
+                        <span className="text-primary">{skill.level}%</span>
+                      </div>
+                      {/* Glassmorphic progress bar */}
+                      <div className="w-full bg-soft-black h-1.5 rounded-full overflow-hidden border border-white/5 relative">
+                        <div
+                          className="bg-gradient-to-r from-primary to-bronze h-full rounded-full transition-all duration-1000 ease-out"
+                          style={{ width: `${skill.level}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

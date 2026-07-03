@@ -21,9 +21,12 @@ export const metadata: Metadata = {
   title: "Divyanshu Kushwaha — Portfolio",
   description: "Awwwards-grade portfolio of Divyanshu Kushwaha, a Computer Science Engineering student and Flutter developer specialized in premium UI/UX design, WebGL elements, and AI automation.",
   authors: [{ name: "Divyanshu Kushwaha" }],
+  icons: {
+    icon: "/globe.svg",
+  },
   openGraph: {
     type: "website",
-    title: "Divyanshu Kushwaha | Creative Developer & AI Engineer",
+    title: "Divyanshu Kushwaha | Software Engineer & AI Enthusiast",
     description: "Handcrafted personal portfolio showing WebGL canvas objects, custom transitions, and SafeAura case study.",
     images: ["/assets/divyanshu_mountain.jpg"],
   },

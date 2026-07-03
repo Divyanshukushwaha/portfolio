@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Shield, Users } from "lucide-react";
+import { Shield, Users, ChevronDown, ChevronUp, Plus, Minus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,14 +13,26 @@ const TIMELINE_DATA = [
     year: "Late 2025",
     title: "SafeAura — Personal Safety App",
     subtitle: "Flutter & Firebase Mobile Developer",
-    description: "Designed, structured, and compiled a personal safety APK using Flutter and Firebase database hooks. Implemented SOS count alert cancellations, contact syncing, and shared the APK live on LinkedIn.",
+    summary: "Designed, structured, and compiled a personal safety APK using Flutter and Firebase database hooks. Implemented SOS count alert cancellations, contact syncing, and shared the APK live on LinkedIn.",
+    bullets: [
+      "Designed modular widget trees inside Flutter for high-frame-rate UI rendering.",
+      "Implemented emergency SOS cancellation grace-period timers using RxDart/Streams.",
+      "Built database structures mapping real-time coordinate tracking updates directly to Firebase document paths.",
+      "Packaged, optimized, and published the production APK, coordinating testing loops."
+    ],
     icon: Shield,
   },
   {
     year: "Aug – Sep 2025",
     title: "International Volunteer",
     subtitle: "Technoxian World Cup 9.0 — Noida, Delhi NCR",
-    description: "Supported management and logistics for the global robotics championship, coordinating with international delegates. Developed team communication, networking, and event operations skills. Awarded official Certificate of Appreciation by WORSO.",
+    summary: "Supported management and logistics for the global robotics championship, coordinating with international delegates. Developed team communication, networking, and event operations skills. Awarded official Certificate of Appreciation by WORSO.",
+    bullets: [
+      "Assisted delegation operations and logistical queries for robotics teams from over 10 different countries.",
+      "Managed coordination and resolved schedule conflicts inside high-density tournament fields.",
+      "Supported international networking syncs and delegate registrations for WORSO.",
+      "Awarded official Certificate of Appreciation for logistics execution under high pressure."
+    ],
     icon: Users,
   },
 ];
@@ -27,6 +40,7 @@ const TIMELINE_DATA = [
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
+  const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -76,6 +90,10 @@ export default function Timeline() {
     return () => ctx.revert();
   }, []);
 
+  const toggleExpand = (idx: number) => {
+    setExpandedIdx(expandedIdx === idx ? null : idx);
+  };
+
   return (
     <section
       id="timeline"
@@ -110,6 +128,7 @@ export default function Timeline() {
             {TIMELINE_DATA.map((item, index) => {
               const isEven = index % 2 === 0;
               const Icon = item.icon;
+              const isExpanded = expandedIdx === index;
 
               return (
                 <div
@@ -125,19 +144,63 @@ export default function Timeline() {
 
                   {/* Card Container */}
                   <div className="w-full md:w-1/2 pl-12 md:pl-0 md:px-8">
-                    <div className="timeline-node-card relative p-6 rounded-2xl bg-stone-gray/20 border border-white/5 hover:border-primary/20 shadow-xl transition-all">
-                      <span className="inline-block text-[10px] font-bold text-primary uppercase tracking-widest mb-2">
-                        {item.year}
-                      </span>
-                      <h3 className="font-display text-lg font-bold text-warm-white mb-1">
-                        {item.title}
-                      </h3>
-                      <span className="text-xs uppercase tracking-wider font-semibold text-muted-gray block mb-4">
-                        {item.subtitle}
-                      </span>
-                      <p className="text-xs sm:text-sm text-soft-gray leading-relaxed">
-                        {item.description}
+                    <div
+                      onClick={() => toggleExpand(index)}
+                      className="timeline-node-card relative p-6 rounded-2xl bg-stone-gray/20 border border-white/5 hover:border-primary/20 shadow-xl transition-all duration-300 cursor-none text-left select-none"
+                    >
+                      <div className="flex justify-between items-start gap-4">
+                        <div>
+                          <span className="inline-block text-[10px] font-bold text-primary uppercase tracking-widest mb-2">
+                            {item.year}
+                          </span>
+                          <h3 className="font-display text-lg font-bold text-warm-white mb-1">
+                            {item.title}
+                          </h3>
+                          <span className="text-xs uppercase tracking-wider font-semibold text-muted-gray block mb-4">
+                            {item.subtitle}
+                          </span>
+                        </div>
+                        <div className="text-primary mt-1">
+                          {isExpanded ? <Minus size={16} /> : <Plus size={16} />}
+                        </div>
+                      </div>
+
+                      <p className="text-xs sm:text-sm text-soft-gray leading-relaxed mb-1">
+                        {item.summary}
                       </p>
+
+                      {/* Expandable Bullet Lists */}
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="overflow-hidden mt-4 pt-4 border-t border-white/5"
+                          >
+                            <span className="text-[9px] uppercase tracking-widest text-primary block mb-3 font-bold">
+                              Key Achievements &amp; Scope
+                            </span>
+                            <ul className="flex flex-col gap-2.5 text-xs text-soft-gray">
+                              {item.bullets.map((bullet, bIdx) => (
+                                <li key={bIdx} className="flex items-start gap-2">
+                                  <span className="h-1 w-1 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      <div className="mt-4 flex justify-end">
+                        <span className="text-[8px] uppercase tracking-widest text-primary font-bold flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
+                          {isExpanded ? "Click to Collapse" : "Click to Expand Details"}
+                          {isExpanded ? <ChevronUp size={10} /> : <ChevronDown size={10} />}
+                        </span>
+                      </div>
+
                     </div>
                   </div>
                 </div>

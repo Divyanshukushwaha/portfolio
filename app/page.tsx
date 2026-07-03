@@ -12,6 +12,7 @@ import Certificates from "@/components/Certificates";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Chatbot from "@/components/Chatbot";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,7 @@ export default function Home() {
           <Education />
           <Contact />
           <Footer />
+          <Chatbot />
         </ScrollProvider>
       )}
     </>

@@ -14,13 +14,17 @@ export default function Footer() {
   return (
     <footer className="relative py-12 border-t border-white/5 bg-soft-black">
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Left column - copyright */}
-        <div className="flex flex-col items-center md:items-start gap-2">
+        
+        {/* Left column - copyright & credit */}
+        <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <p className="text-sm font-semibold tracking-wider font-display uppercase text-warm-white">
             Divyanshu<span className="text-primary">.</span>
           </p>
           <p className="text-xs text-muted-gray">
-            &copy; 2026 Divyanshu Kushwaha · Built with passion
+            &copy; 2026 Divyanshu Kushwaha
+          </p>
+          <p className="text-[10px] text-muted-gray uppercase tracking-widest mt-0.5">
+            Built with React, Next.js and ❤️
           </p>
         </div>
 
@@ -36,8 +40,8 @@ export default function Footer() {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
+              width={15}
+              height={15}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -61,8 +65,8 @@ export default function Footer() {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
+              width={15}
+              height={15}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -75,13 +79,24 @@ export default function Footer() {
             </svg>
           </a>
 
+          {/* Instagram */}
+          <a
+            href="https://www.instagram.com/divyan_shu_kushwaha"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="magnetic p-2.5 rounded-full bg-stone-gray/20 border border-white/5 hover:border-primary/30 text-muted-gray hover:text-warm-white transition-all shadow-md cursor-none"
+            aria-label="Instagram Profile"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+
           {/* Mail */}
           <a
             href="mailto:divyanshukushawha39@gmail.com"
             className="magnetic p-2.5 rounded-full bg-stone-gray/20 border border-white/5 hover:border-primary/30 text-muted-gray hover:text-warm-white transition-all shadow-md cursor-none"
             aria-label="Email Address"
           >
-            <Mail size={16} />
+            <Mail size={15} />
           </a>
         </div>
 
