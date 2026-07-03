@@ -3,6 +3,7 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Cursor from "@/components/Cursor";
 import ThreeBackground from "@/components/ThreeBackground";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,6 +50,7 @@ export default function RootLayout({
         <Cursor />
 
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
