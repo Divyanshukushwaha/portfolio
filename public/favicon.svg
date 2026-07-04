@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Rounded Rect container with thin gold border -->
+  <rect width="504" height="504" x="4" y="4" rx="128" fill="#0A0A0A" stroke="url(#goldGrad)" stroke-width="8"/>
+  
+  <defs>
+    <!-- Premium Metallic Gold/Bronze Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3E7C4" />
+      <stop offset="30%" stop-color="#D4AF37" />
+      <stop offset="70%" stop-color="#AA7C11" />
+      <stop offset="100%" stop-color="#6F4E07" />
+    </linearGradient>
+  </defs>
+
+  <!-- Luxury Minimalist D Symbol with Gold Gradient Fill -->
+  <path d="M170 120 h100 c75 0 125 40 125 136 s-50 136 -125 136 H170 Z M226 172 v172 h38 c48 0 72 -20 72 -86 s-24 -86 -72 -86 Z" fill="url(#goldGrad)"/>
+</svg>

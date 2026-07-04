@@ -21,7 +21,7 @@ export default function Footer() {
             Divyanshu<span className="text-primary">.</span>
           </p>
           <p className="text-xs text-muted-gray">
-            &copy; 2026 Divyanshu Kushwaha
+            &copy; 2026 Divyanshu
           </p>
           <p className="text-[10px] text-muted-gray uppercase tracking-widest mt-0.5">
             Built with React, Next.js and ❤️

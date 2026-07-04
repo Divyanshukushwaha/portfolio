@@ -278,8 +278,8 @@ export default function About() {
               </h4>
               <div className="flex flex-col gap-3 text-xs sm:text-sm text-left">
                 <div className="flex justify-between items-center border-b border-white/5 pb-1">
-                  <span className="text-muted-gray text-[11px]">Full Name</span>
-                  <span className="text-warm-white font-semibold text-xs">Divyanshu Kushwaha</span>
+                  <span className="text-muted-gray text-[11px]">Name</span>
+                  <span className="text-warm-white font-semibold text-xs">Divyanshu</span>
                 </div>
                 <div className="flex justify-between items-center border-b border-white/5 pb-1">
                   <span className="text-muted-gray text-[11px]">University</span>

@@ -144,12 +144,12 @@ export function HeroSection() {
                                     <h1
                                         className="mt-8 max-w-5xl mx-auto text-balance text-5xl md:text-7xl lg:mt-12 xl:text-[5.5rem] font-display font-bold leading-[1.05] tracking-tight text-warm-white">
                                         Hi, I'm <br/>
-                                        <span className="text-primary">Divyanshu Kushwaha</span> 👋
+                                        <span className="text-primary">Divyanshu</span> 👋
                                     </h1>
                                     
                                     {/* Recruiter aligned Subtitle text */}
                                     <p className="mx-auto mt-6 max-w-3xl text-balance text-xs sm:text-sm text-muted-foreground uppercase tracking-widest font-semibold leading-relaxed">
-                                        Diploma CSE Student • Flutter Developer • AI & Vibe Coding Enthusiast
+                                        Flutter Developer • AI Builder • Vibe Coder
                                     </p>
 
                                     <p className="mx-auto mt-3 max-w-xl text-[11px] sm:text-xs text-muted-gray">
@@ -159,7 +159,7 @@ export function HeroSection() {
                                     {/* Description */}
                                     <p
                                         className="mx-auto mt-6 max-w-xl text-balance text-xs sm:text-sm text-soft-gray leading-relaxed">
-                                        CSE student at Amity University, Greater Noida — passionate about software development, AI chatbot automations, leadership, and building real solutions that make an impact.
+                                        Building AI-Powered Apps with Flutter, Firebase, and Modern AI Tools.
                                     </p>
                                 </AnimatedGroup>
 
